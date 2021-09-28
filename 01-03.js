@@ -1,36 +1,71 @@
- // create a scene, that will hold all our elements such as objects, cameras and lights.
 var scene = new THREE.Scene();
-function cubo( x, y, z, color, material, alambrado){
-	// create a cube
-    var cubeGeometry = new THREE.BoxGeometry(x, y, z);
-    var cubeMaterial;
-	switch(material){
-		case 'Basic':cubeMaterial = new THREE.MeshBasicMaterial({ color: color, wireframe: alambrado  });
-                break;
-		case 'Standard':cubeMaterial = new THREE.MeshStandardMaterial({ color: color, wireframe: alambrado  });
-                break;
-		case 'Physical':cubeMaterial = new THREE.MeshPhysicalMaterial({ color: color, wireframe: alambrado  });
-                break;
-		case 'Phong':cubeMaterial = new THREE.MeshPhongMaterial({ color: color, wireframe: alambrado  });
-                break;
-		case 'Lambert':cubeMaterial = new THREE.MeshLambertMaterial({ color: color, wireframe: alambrado  });
-                break;
-	}
-    var cubito = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
+function cubo(mx,my,mz,color1,material,alambrado,px,py,pz){
+    var cubeGeometry = new THREE.BoxGeometry(mx, my, mz);
+    var cubeMaterial;
+    switch(material){
+        case 'Basic': cubeMaterial = new THREE.MeshBasicMaterial({color: color1,
+            wireframe: alambrado
+        });
+        break;
+        case 'Standard': cubeMaterial = new THREE.MeshStandardMaterial({color: color1,
+            wireframe: alambrado
+        });
+        break;
+        case 'Physical': cubeMaterial = new THREE.MeshPhysicalMaterial({color: color1,
+            wireframe: alambrado
+        });
+        break;
+        case 'Phong': cubeMaterial = new THREE.MeshPhongMaterial({color: color1,
+            wireframe: alambrado
+        });
+        break;
+        case 'Lambert': cubeMaterial = new THREE.MeshLamberdMaterial({color: color1,
+            wireframe: alambrado
+        });
+        break;
+    }
+   
+    var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
     // position the cube
-    //cubito.position.set(-4, 3, 0);
+    cube.position.set(px, py, pz);
 
     // add the cube to the scene
-    scene.add(cubito);
-    return cubito;
+    scene.add(cube);
+}
+function esfera(r,wS,hS,color2,material,alambrado,px,py,pz){
+    var sphereGeometry = new THREE.SphereGeometry(r, wS, hS);
+    switch(material){
+        case 'Basic': var sphereMaterial = new THREE.MeshBasicMaterial({color: color2,
+            wireframe: alambrado
+        });
+        break;
+        case 'Standard': var sphereMaterial = new THREE.MeshStandardMaterial({color: color2,
+            wireframe: alambrado
+        });
+        break;
+        case 'Physical': var sphereMaterial = new THREE.MeshPhysicalMaterial({color: color2,
+            wireframe: alambrado
+        });
+        break;
+        case 'Phong': var sphereMaterial = new THREE.MeshPhongMaterial({color: color2,
+            wireframe: alambrado
+        });
+        break;
+        case 'Lambert': var sphereMaterial = new THREE.MeshLambertMaterial({color: color2,
+            wireframe: alambrado
+        });
+        break;
+    }
+    
+    var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 
-	
+    // position the sphere
+    sphere.position.set(px, py, pz);
+
+    scene.add(sphere);
 }
 function init() {
-    // create a scene, that will hold all our elements such as objects, cameras and lights.
-    var scene = new THREE.Scene();
-
     // create a camera, which defines where we're looking at.
     var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 
@@ -46,7 +81,8 @@ function init() {
     // create the ground plane
     var planeGeometry = new THREE.PlaneGeometry(60, 20);
     var planeMaterial = new THREE.MeshBasicMaterial({
-        color: 0xAAAAAA
+        color: 0xAAAAAA,
+        wireframe: true
     });
     var plane = new THREE.Mesh(planeGeometry, planeMaterial);
 
@@ -58,32 +94,13 @@ function init() {
     scene.add(plane);
 
     // create a cube
-	cubo(4, 4, 4, 0xFF0000, 'Basic' ,true);
-  
-    /*var cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
-    var cubeMaterial = new THREE.MeshBasicMaterial({
-        color: 0xFF0000,
-        wireframe: true
-    });
-    var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-    // position the cube
-    //cube.position.set(-4, 3, 0);
-    // add the cube to the scene
-    scene.add(cube);*/
+    cubo(4, 4, 4, 0xFF0000, 'Basic', true, 0, 0, 0);
+    renderer.render(cubo);
 
     // create a sphere
-    var sphereGeometry = new THREE.SphereGeometry(4, 20, 20);
-    var sphereMaterial = new THREE.MeshBasicMaterial({
-        color: 0x7777FF,
-        wireframe: true
-    });
-    var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+    esfera(4, 20, 20, 0x7777FF, 'Basic', true, 0, 0, 0);
+    renderer.render(esfera);
 
-    // position the sphere
-    sphere.position.set(0, 0, 0);
-
-    // add the sphere to the scene
-    scene.add(sphere);
 
     // position and point the camera to the center of the scene
     camera.position.set(-30, 40, 30);
